@@ -6,32 +6,22 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Entity
-@Table(name = "proyectos")
+@Table(name = "habilidades")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProyectoEntity {
+public class HabilidadEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String titulo;
-
-    @Column(length = 500)
-    private String descripcion;
-
-    private String urlImagen;
-    private String urlRepositorio;
-    private String urlDemo;
+    private String nombre;
+    private Integer porcentaje;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id", nullable = false)
     private UsuarioEntity usuario;
-
-    private LocalDateTime fechaCreacion;
 }

@@ -3,6 +3,7 @@ package com.backend.portafolio.infrastructure.adapter.out.persistence;
 import com.backend.portafolio.domain.model.Proyecto;
 import com.backend.portafolio.domain.port.out.ProyectoRepositoryPort;
 import com.backend.portafolio.infrastructure.adapter.out.persistence.entity.ProyectoEntity;
+import com.backend.portafolio.infrastructure.adapter.out.persistence.entity.UsuarioEntity;
 import com.backend.portafolio.infrastructure.adapter.out.persistence.repository.ProyectoJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -43,6 +44,10 @@ public class ProyectoRepositoryAdapter implements ProyectoRepositoryPort {
 
 
     private ProyectoEntity toEntity(Proyecto domain) {
+        // Creamos la referencia al usuario para mantener la integridad referencial (Clave Foránea)
+        UsuarioEntity usuarioReferencia = new UsuarioEntity();
+        usuarioReferencia.setId(domain.getUsuarioId());
+
         return ProyectoEntity.builder()
                 .id(domain.getId())
                 .titulo(domain.getTitulo())
@@ -50,7 +55,7 @@ public class ProyectoRepositoryAdapter implements ProyectoRepositoryPort {
                 .urlImagen(domain.getUrlImagen())
                 .urlRepositorio(domain.getUrlRepositorio())
                 .urlDemo(domain.getUrlDemo())
-                .usuarioId(domain.getUsuarioId())
+                .usuario(usuarioReferencia) // Pasamos la entidad en lugar del ID suelto
                 .fechaCreacion(domain.getFechaCreacion())
                 .build();
     }
@@ -63,7 +68,7 @@ public class ProyectoRepositoryAdapter implements ProyectoRepositoryPort {
                 .urlImagen(entity.getUrlImagen())
                 .urlRepositorio(entity.getUrlRepositorio())
                 .urlDemo(entity.getUrlDemo())
-                .usuarioId(entity.getUsuarioId())
+                .usuarioId(entity.getUsuario().getId()) // Extraemos el ID de la entidad
                 .fechaCreacion(entity.getFechaCreacion())
                 .build();
     }
