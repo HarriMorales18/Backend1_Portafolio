@@ -37,4 +37,40 @@ public class ProyectoService {
 
         return proyectoRepositoryPort.findAllByUsuarioId(usuario.getId());
     }
+
+    public Proyecto actualizarProyecto(Long id, Proyecto proyectoActualizado) {
+        String correoUsuario = SecurityContextHolder.getContext().getAuthentication().getName();
+        Usuario usuarioActual = usuarioRepositoryPort.findByCorreo(correoUsuario)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        Proyecto proyectoExistente = proyectoRepositoryPort.findById(id)
+                .orElseThrow(() -> new RuntimeException("Proyecto no encontrado en la base de datos"));
+
+        if (!proyectoExistente.getUsuarioId().equals(usuarioActual.getId())) {
+            throw new RuntimeException("ACCESO DENEGADO: No tienes permiso para modificar este proyecto");
+        }
+
+        proyectoExistente.setTitulo(proyectoActualizado.getTitulo());
+        proyectoExistente.setDescripcion(proyectoActualizado.getDescripcion());
+        proyectoExistente.setUrlImagen(proyectoActualizado.getUrlImagen());
+        proyectoExistente.setUrlRepositorio(proyectoActualizado.getUrlRepositorio());
+        proyectoExistente.setUrlDemo(proyectoActualizado.getUrlDemo());
+
+        return proyectoRepositoryPort.save(proyectoExistente);
+    }
+
+    public void eliminarProyecto(Long id) {
+        String correoUsuario = SecurityContextHolder.getContext().getAuthentication().getName();
+        Usuario usuarioActual = usuarioRepositoryPort.findByCorreo(correoUsuario)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        Proyecto proyectoExistente = proyectoRepositoryPort.findById(id)
+                .orElseThrow(() -> new RuntimeException("Proyecto no encontrado en la base de datos"));
+
+        if (!proyectoExistente.getUsuarioId().equals(usuarioActual.getId())) {
+            throw new RuntimeException("ACCESO DENEGADO: No tienes permiso para eliminar este proyecto");
+        }
+
+        proyectoRepositoryPort.deleteById(id);
+    }
 }
