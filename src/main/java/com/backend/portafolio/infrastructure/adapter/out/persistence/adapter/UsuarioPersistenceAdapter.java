@@ -34,4 +34,10 @@ public class UsuarioPersistenceAdapter implements UsuarioRepositoryPort {
     public boolean existsByCorreo(String correo) {
         return repository.existsByCorreo(correo);
     }
+
+    @Override
+    public Optional<Usuario> findById(Long id) {
+        return repository.findById(id)
+                .map(mapper::toDomain);
+    }
 }

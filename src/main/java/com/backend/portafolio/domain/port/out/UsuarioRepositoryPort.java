@@ -8,4 +8,5 @@ public interface UsuarioRepositoryPort {
     Usuario save(Usuario usuario);
     Optional<Usuario> findByCorreo(String correo);
     boolean existsByCorreo(String correo);
+    Optional<Usuario> findById(Long id);
 }
