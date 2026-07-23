@@ -43,4 +43,16 @@ public class UsuarioService {
 
         return tokenProviderPort.generateToken(usuario);
     }
+
+    // 1. Método para buscar al usuario por correo
+    public Usuario buscarPorCorreo(String correo) {
+        return usuarioRepositoryPort.findByCorreo(correo)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+    }
+
+    // 2. Método para generar un token directamente si ya tenemos el objeto Usuario
+    public String generarToken(Usuario usuario) {
+        return tokenProviderPort.generateToken(usuario);
+    }
+
 }
