@@ -21,3 +21,8 @@ security:
   jwt:
     secret-key: ${JWT_SECRET:MTIzNDU2Nzg5MGFiY2RlZjEyMzQ1Njc4OTBhYmNkZWYxMjM0NTY3ODkwYWJjZGVm}
     expiration-time: 86400000
+
+  cloudinary:
+    cloud-name: wuenqpan
+    api-key: 323679837997148
+    api-secret: tPRBzE7HggsTRR6b2fxvl9-ASmo

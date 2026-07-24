@@ -32,7 +32,6 @@ public class UsuarioEntity {
     private String telefono;
     private String ciudad;
     private String pais;
-
     private LocalDateTime fechaCreacion;
     private LocalDateTime fechaActualizacion;
 }

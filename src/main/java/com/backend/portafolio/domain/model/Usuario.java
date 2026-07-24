@@ -26,4 +26,6 @@ public class Usuario {
     private String pais;
     private LocalDateTime fechaCreacion;
     private LocalDateTime fechaActualizacion;
+    private String githubUrl;
+    private String linkedinUrl;
 }
